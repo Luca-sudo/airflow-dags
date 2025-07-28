@@ -6,7 +6,7 @@ from airflow.providers.standard.operators.empty import EmptyOperator
 with DAG(
     dag_id="my_dag_name",
     start_date=datetime.datetime(2021, 1, 1),
-    schedule="@daily",
+    schedule="*/1 * * * *",
     ):
 
     op1 = EmptyOperator(task_id="task1")
