@@ -8,4 +8,9 @@ with DAG(
     start_date=datetime.datetime(2021, 1, 1),
     schedule="@daily",
     ):
-    EmptyOperator(task_id="task")
+
+    op1 = EmptyOperator(task_id="task1")
+    op2 = EmptyOperator(task_id="task2")
+    op3 = EmptyOperator(task_id="task3")
+    op4 = EmptyOperator(task_id="task4")
+    op1 >> [op2, op3] >> op4
