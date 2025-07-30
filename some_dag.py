@@ -2,7 +2,7 @@ import datetime
 
 from airflow.sdk import DAG
 from airflow.providers.standard.operators.empty import EmptyOperator
-from airflow.providers.postgres import PostgresOperator
+from airflow.providers.postgres.operators.postgres import PostgresOperator
 
 with DAG(
     dag_id="my_dag_name",
