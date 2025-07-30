@@ -2,7 +2,7 @@ import datetime
 
 from airflow.sdk import DAG
 from airflow.providers.standard.operators.empty import EmptyOperator
-from airflow.providers.postgres.operators.postgres import PostgresOperator
+from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
 
 with DAG(
     dag_id="my_dag_name",
@@ -13,9 +13,9 @@ with DAG(
     op1 = EmptyOperator(task_id="task1")
     op2 = EmptyOperator(task_id="task2")
     op3 = EmptyOperator(task_id="task3")
-    op4 = PostgresOperator(
+    op4 = SQLExecuteQueryOperator(
             task_id="create_table",
-            postgres_conn_id="postgres",
+            conn_id="postgres",
             sql="""
             CREATE TABLE IF NOT EXISTS some_table(
                 id SERIAL PRIMARY KEY,
@@ -24,9 +24,9 @@ with DAG(
             );
             """
             )
-    op5 = PostgresOperator(
+    op5 = SQLExecuteQueryOperator(
             task_id="insert_names",
-            postgres_conn_id="postgres",
+            conn_id="postgres",
             sql="""
             INSERT INTO some_table (name) VALUES ('reinhard');
             """
