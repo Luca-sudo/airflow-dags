@@ -33,7 +33,7 @@ with DAG(
             sql=f"""
             INSERT INTO some_table (name) 
             SELECT 'reinhard' 
-            FROM generate_series(1, {num_rows};
+            FROM generate_series(1, {num_rows});
             """
             )
     op1 >> op3 >> op4 >> op2
