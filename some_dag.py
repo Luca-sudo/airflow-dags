@@ -3,12 +3,15 @@ import datetime
 from airflow.sdk import DAG
 from airflow.providers.standard.operators.empty import EmptyOperator
 from airflow.providers.common.sql.operators.sql import SQLExecuteQueryOperator
+import random
 
 with DAG(
     dag_id="my_dag_name",
     start_date=datetime.datetime(2021, 1, 1),
     schedule="*/1 * * * *",
     ):
+
+    num_rows = random.randint(1, 100)
 
     op1 = EmptyOperator(task_id="task1")
     op2 = EmptyOperator(task_id="task2")
@@ -27,8 +30,10 @@ with DAG(
     op5 = SQLExecuteQueryOperator(
             task_id="insert_names",
             conn_id="postgres",
-            sql="""
-            INSERT INTO some_table (name) VALUES ('reinhard');
+            sql=f"""
+            INSERT INTO some_table (name) 
+            SELECT 'reinhard' 
+            FROM generate_series(1, {num_rows};
             """
             )
     op1 >> op3 >> op4 >> op2
